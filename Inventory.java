@@ -1,3 +1,4 @@
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -79,8 +80,8 @@ public class Inventory {
             FileWriter writer = new FileWriter(txtName);
 
             writer.write(nameInv+"\n");
-            writer.write(quant+"\n");;
-            writer.write(descrip);
+            writer.write(quant+"\n");
+            writer.write(descrip +"\n");
             writer.close();
 
         } catch (IOException e) {
@@ -90,6 +91,18 @@ public class Inventory {
 
         
 
+    }
+
+    public void appendToTxt (String filePath, String name, int quantity, String description) {
+
+         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+             
+            writer.write(name + "," + quantity + "," + description);
+
+            writer.newLine();
+         } catch (IOException e) {
+            System.err.println("An error ocurred while the data was creating");
+         }
     }
 
 

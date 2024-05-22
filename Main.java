@@ -8,6 +8,7 @@ public class Main {
     public static void main(String[] args) {
 
 
+
         int optionMenu = 0;
 
 
@@ -37,7 +38,7 @@ public class Main {
                     System.out.println("Enter the quantity of products to the inventary");
                     int quant = scanner.nextInt();
 
-                    
+                    Inventory inventoryO = new Inventory();
     
 
                     //System.out.println(nameInv + " " + txtName + " " + quant + " " + descrip);
@@ -67,13 +68,22 @@ public class Main {
 
                         inventory.add(product);
 
+                        System.out.println(txtName);
+
+                        inventoryO.appendToTxt(txtName, productName, productQuant, productDescrip);
+
                         System.out.println("Your " + (i+1) + " product was succesfully created");
+
+                        System.out.println(productName+" "+productQuant+" "+productDescrip);
   
                     }    
 
                     // Create a new object inventory with the data
-                    Inventory newInventory = new Inventory(nameInv, quant, descrip, inventory);
-                    newInventory.createTXT(txtName, nameInv, quant, descrip);
+                    inventoryO.setName(nameInv);
+                    inventoryO.setQuantityProducts(quant);
+                    inventoryO.setDescription(descrip);
+                    inventoryO.setInventory(inventory);
+                    inventoryO.createTXT(txtName, nameInv, quant, descrip);
 
                 }
             }
