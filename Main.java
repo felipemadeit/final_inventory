@@ -31,12 +31,13 @@ public class Main {
                     // The inventory will saved in a txt file
                     String txtName = nameInv + ".txt";
 
+                    System.out.println("Enter a short description to " + nameInv + " inventory");
+                    String descrip = scanner.nextLine();
+
                     System.out.println("Enter the quantity of products to the inventary");
                     int quant = scanner.nextInt();
 
-                    System.out.println("Enter a short description to " + nameInv + " inventory");
-                    String descrip = scanner.nextLine();
-                    scanner.nextLine();
+                    
     
 
                     //System.out.println(nameInv + " " + txtName + " " + quant + " " + descrip);
@@ -68,10 +69,11 @@ public class Main {
 
                         System.out.println("Your " + (i+1) + " product was succesfully created");
   
-                    }
-                    
+                    }    
+
                     // Create a new object inventory with the data
                     Inventory newInventory = new Inventory(nameInv, quant, descrip, inventory);
+                    newInventory.createTXT(txtName, nameInv, quant, descrip);
 
                 }
             }

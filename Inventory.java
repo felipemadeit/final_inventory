@@ -72,19 +72,23 @@ public class Inventory {
      * @param txtName the name of the file 
      */
 
-    public void createTXT (String txtName) {
+    public void createTXT (String txtName, String nameInv, int quant, String descrip) {
 
         try {
 
             FileWriter writer = new FileWriter(txtName);
 
-            writer.write("Hello :) ");
+            writer.write(nameInv+"\n");
+            writer.write(quant+"\n");;
+            writer.write(descrip);
             writer.close();
 
         } catch (IOException e) {
 
             System.out.println("Error can not create a txt file");
         }
+
+        
 
     }
 
