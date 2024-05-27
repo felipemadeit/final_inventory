@@ -2,9 +2,11 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Inventory {
 
+    Scanner scanner = new Scanner(System.in);
     private String name;
     private int quantityProducts;
     private String description;
@@ -71,16 +73,18 @@ public class Inventory {
      * This method create a txt file with the inventory
      * 
      * @param txtName the name of the file 
+     * @param  nameInv the name of the inventory
+     * @param descrip the description of the inventory
      */
 
-    public void createTXT (String txtName, String nameInv, int quant, String descrip) {
+    public void createTXT (String txtName, String nameInv, String descrip) {
 
         try {
 
-            FileWriter writer = new FileWriter(txtName);
+            String pathSave = "inventoryTxtFiles" +  "/" + txtName;
+            FileWriter writer = new FileWriter(pathSave);
 
             writer.write(nameInv+"\n");
-            writer.write(quant+"\n");
             writer.write(descrip +"\n");
             writer.close();
 
@@ -93,17 +97,84 @@ public class Inventory {
 
     }
 
-    public void appendToTxt (String filePath, String name, int quantity, String description) {
+    /**
+     * This method append to the inventory txt the products
+     * 
+     * @param txtName the name of the file to append the products
+     * @param name the name of the product                                           
+     * @param quantity the quantity of the product
+     * @param description the description of the product
+     * 
+     */
 
-         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-             
-            writer.write(name + "," + quantity + "," + description);
+     public void appendToTxt(String txtName, String name, int quantity, String description) {
+        
+        // The path of the file to append the products
+        String filePath = txtName;
 
-            writer.newLine();
-         } catch (IOException e) {
-            System.err.println("An error ocurred while the data was creating");
-         }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+        
+            // Write in the file the product data
+            writer.write(name + "\n");
+            writer.write(quantity + "\n");
+            writer.write(description + "\n");
+        
+            System.out.println("Successfully appended product to " + filePath);
+        } catch (IOException e) {
+        
+            System.err.println("An error occurred while appending to the file: " + e.getMessage());
+        }
     }
+
+    /**
+     * This method get the data from the user to create an add products to the inventory
+     * 
+     * @param inventoryName
+     * @return an arraylist with Products
+     */
+    public ArrayList<Product> addProducts (String inventoryName, String fileName) {
+
+        // Create an arraylist to storage the products
+        ArrayList<Product> products = new ArrayList<>();
+
+        System.out.println("Enter the quantity of the products");
+        int productQuantity = scanner.nextInt();
+
+        // Get quantity times the product data
+        for (int i = 0; i < productQuantity; i++) {
+
+            System.out.println("Enter the name of the product: ");
+            String productName = scanner.next();
+
+
+            System.out.println("Please enter the quantity of the " + productName);
+            int quantityProd = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.println("Please enter a short description for the " + productName+ " product");
+            String productDescription = scanner.nextLine();
+
+            System.out.println(productName);
+            System.out.println(quantityProd);
+            System.out.println(productDescription);
+
+            String pathFile = "inventoryTxtFiles" + "/" + fileName;
+
+            appendToTxt(pathFile, productName, quantityProd, productDescription);
+
+            // Create a new product 
+            Product newProduct = new Product(productName, quantityProd, productDescription);
+            
+            // Add a the product to the products array
+            products.add(newProduct);
+            
+        }
+        // Return the products array
+        return products;
+    }
+
+
 
 
     

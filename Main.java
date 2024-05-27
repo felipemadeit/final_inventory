@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -25,65 +24,48 @@ public class Main {
 
             switch (optionMenu) {
                 case 1 -> {
+
                     // Create a new inventory
                     System.out.println("Enter the name of the inventory");
                     String nameInv = scanner.next();
                     scanner.nextLine();
+
                     // The inventory will saved in a txt file
                     String txtName = nameInv + ".txt";
 
                     System.out.println("Enter a short description to " + nameInv + " inventory");
                     String descrip = scanner.nextLine();
 
-                    System.out.println("Enter the quantity of products to the inventary");
-                    int quant = scanner.nextInt();
-
                     Inventory inventoryO = new Inventory();
     
+                    System.out.println("Do you want to add products to your " +nameInv + " inventory ?" );
+                    System.out.println("1. Add Products");
+                    System.out.println("2. I don´t want to add products");
 
-                    //System.out.println(nameInv + " " + txtName + " " + quant + " " + descrip);
-
-                    // Create a ArrayList with the products
-                    ArrayList <Product> inventory = new ArrayList<>();
-
-                    // Get quant times the data product
-                    for (int i = 0; i < quant; i++) {
-
-                        System.out.println("Enter the name of the " + (i+1) + " product");
-                        String productName = scanner.next();
-                        scanner.nextLine();
-
-                        System.out.println("Enter the quantity of the " + productName + " product");
-                        int productQuant = scanner.nextInt();
-
-                        scanner.nextLine();
-                        System.out.println("Enter a short description of " + productName);
-                        String productDescrip = scanner.nextLine();
-
-                        // Create a Product object
-
-                        Product product = new Product(productName, productQuant, productDescrip);
-
-                        // Add to the arraylist the new product
-
-                        inventory.add(product);
-
-                        System.out.println(txtName);
-
-                        inventoryO.appendToTxt(txtName, productName, productQuant, productDescrip);
-
-                        System.out.println("Your " + (i+1) + " product was succesfully created");
-
-                        System.out.println(productName+" "+productQuant+" "+productDescrip);
-  
-                    }    
+                    int productsOption = scanner.nextInt();
 
                     // Create a new object inventory with the data
                     inventoryO.setName(nameInv);
-                    inventoryO.setQuantityProducts(quant);
                     inventoryO.setDescription(descrip);
-                    inventoryO.setInventory(inventory);
-                    inventoryO.createTXT(txtName, nameInv, quant, descrip);
+
+                    // Create the inventory txt
+                    inventoryO.createTXT(txtName, nameInv, descrip);
+
+
+                    if (productsOption == 1) {
+
+                        inventoryO.setInventory(inventoryO.addProducts(nameInv, txtName));
+
+                    } else {
+                        
+                        System.out.println("Your " + nameInv + " inventory was created succesfully");
+                    }
+   
+
+                    
+
+                   
+                    
 
                 }
             }
